@@ -19,6 +19,7 @@
   "homepage": "https://github.com/hasimy-as/Codebase-Restify#readme",
   "dependencies": {
     "confidence": "^5.0.0",
+    "mongodb": "^3.6.3",
     "restify": "^8.5.1",
     "restify-cors-middleware": "^1.1.1",
     "winston": "^3.3.3"
