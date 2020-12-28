@@ -17,10 +17,10 @@ const createConnection = async (env) => {
 		poolSize: 50,
 		keepAlive: 5000,
 		socketTimeoutMS: 5000,
-    connectTimeoutMS: 5000,
+		connectTimeoutMS: 5000,
 	};
 	try {
-    const mongoConnect = await mongodb.connect(env, options);
+		const mongoConnect = await mongodb.connect(env, options);
 		logger.log(ctx, 'database running', 'connected!');
 		wrapper.data(mongoConnect);
 	} catch (err) {
@@ -51,6 +51,54 @@ const init = () => {
 	createConnectionPool();
 };
 
+const isExistConnection = async (env) => {
+	let state = {};
+	connPool.map((currentConnection) => {
+		if (currentConnection.env === env) state = currentConnection;
+		return state;
+	});
+	if (!!state)
+		wrapper.error(
+			'Error connection',
+			'Connection must be created',
+			CODE.NOT_FOUND,
+		);
+};
+
+const isConnected = async (state) => {
+	const connection = state.db;
+	if (!connection.isConnected()) {
+		wrapper.error(
+			'Error connection',
+			'Connection must be created',
+			CODE.NOT_FOUND,
+			state,
+		);
+	}
+	return wrapper.data(state);
+};
+
+const getConnection = async (env) => {
+	let connectionIndex;
+	const checkConnection = async () => {
+		const result = await isExistConnection(env);
+		if (!!result) return result;
+		const connection = await isConnected(result.data);
+		connectionIndex = result.data.index;
+		return connection;
+	};
+
+	const result = await checkConnection();
+	if (!!result.err) {
+		const state = await createConnection(env);
+		if (state.err) wrapper.data(connPool[connectionIndex]);
+		connPool[connectionIndex].db = state.data;
+		return wrapper.data(connPool[connectionIndex]);
+	}
+	return result;
+};
+
 module.exports = {
-	init
+	init,
+	getConnection,
 };
