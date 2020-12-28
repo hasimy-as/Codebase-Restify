@@ -1,4 +1,5 @@
 const mongodb = require('mongodb').MongoClient;
+const validate = require('validate.js');
 
 const { CODE } = require('../lib/http_code');
 const logger = require('../lib/logger');
@@ -54,10 +55,12 @@ const init = () => {
 const isExistConnection = async (env) => {
 	let state = {};
 	connPool.map((currentConnection) => {
-		if (currentConnection.env === env) state = currentConnection;
+		if (currentConnection.env === env) {
+			state = currentConnection;
+		}
 		return state;
 	});
-	if (!!state)
+	if (validate.isEmpty(state))
 		wrapper.error(
 			'Error connection',
 			'Connection must be created',
@@ -82,16 +85,20 @@ const getConnection = async (env) => {
 	let connectionIndex;
 	const checkConnection = async () => {
 		const result = await isExistConnection(env);
-		if (!!result) return result;
+		if (result.err) {
+			return result;
+		}
 		const connection = await isConnected(result.data);
 		connectionIndex = result.data.index;
 		return connection;
 	};
 
 	const result = await checkConnection();
-	if (!!result.err) {
+	if (result.err) {
 		const state = await createConnection(env);
-		if (state.err) wrapper.data(connPool[connectionIndex]);
+		if (state.err) {
+			wrapper.data(connPool[connectionIndex]);
+		}
 		connPool[connectionIndex].db = state.data;
 		return wrapper.data(connPool[connectionIndex]);
 	}

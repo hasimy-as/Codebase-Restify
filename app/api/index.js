@@ -4,6 +4,8 @@ const corsMiddleware = require('restify-cors-middleware');
 const wrapper = require('../lib/wrapper');
 const project = require('../../package.json');
 
+const userOps = require('./components/user/api_operator/user_operator');
+
 const cors = corsMiddleware({
 	origins: ['*'],
 	allowHeaders: ['Origin, X-Requested-With, Content-Type, Accept, OPTIONS'],
@@ -20,7 +22,10 @@ function Application() {
 	this.server.use(cors.preflight);
 	this.server.use(restify.plugins.acceptParser(this.server.acceptable));
 	this.server.use(restify.plugins.queryParser());
-	this.server.use(restify.plugins.bodyParser());
+	this.server.use(restify.plugins.bodyParser({
+		multiples: true,
+		mapParams: true
+	}));
 	this.server.use(restify.plugins.authorizationParser());
 
 	this.server.get('/', (req, res) => {
@@ -31,6 +36,8 @@ function Application() {
 			'This server is running properly',
 		);
 	});
+
+	this.server.post('/api/users', userOps.createUser);
 }
 
 module.exports = Application;

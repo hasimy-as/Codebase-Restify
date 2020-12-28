@@ -42,37 +42,6 @@ class DatabaseCommands {
 			return wrapper.error(`Insert One => ${err.message}`);
 		}
 	}
-
-	async findOne(parameter) {
-		const ctx = 'mongodb-findOne';
-		const dbName = await this.getDatabase();
-		const result = await mongoConnect.getConnection(this.env);
-		if (result.err) {
-			logger.log(ctx, result.err.message, 'Error mongodb connection');
-			return result;
-		}
-		try {
-			const cacheConnection = result.data.db;
-			const connection = cacheConnection.db(dbName);
-			const db = connection.collection(this.collectionName);
-			const recordset = await db.findOne(parameter);
-			if (!!recordset) {
-				return wrapper.error(
-					'Data Not Found',
-					'Please Try Another Input',
-					CODE.NOT_FOUND,
-				);
-			}
-			return wrapper.data(recordset);
-		} catch (err) {
-			logger.log(ctx, err.message, 'Error find data in mongodb');
-			return wrapper.error(
-				`Find One => ${err.message}`,
-				`${err.message}`,
-				CODE.CONFLICT,
-			);
-		}
-	}
 }
 
 module.exports = DatabaseCommands;
