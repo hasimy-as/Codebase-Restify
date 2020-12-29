@@ -1,4 +1,4 @@
-const joi = require('@hapi/joi');
+const joi = require('joi');
 
 const createUser = joi.object({
 	name: joi.string().required(),
