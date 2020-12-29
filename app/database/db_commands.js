@@ -34,7 +34,8 @@ class DatabaseCommands {
 			const db = connection.collection(this.collectionName);
 			const recordset = await db.insertOne(document);
 			if (recordset.result.n !== 1) {
-				return wrapper.error('Failed Inserting Data to Database');
+				logger.log(ctx, CODE.BAD_REQUEST, 'Database error');
+				return wrapper.error('Failed to insert data');
 			}
 			return wrapper.data(document);
 		} catch (err) {
