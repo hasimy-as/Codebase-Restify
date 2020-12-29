@@ -19,13 +19,15 @@ const createConnection = async (env) => {
 		keepAlive: 5000,
 		socketTimeoutMS: 5000,
 		connectTimeoutMS: 5000,
+		useNewUrlParser: true,
+		useUnifiedTopology: true,
 	};
 	try {
 		const mongoConnect = await mongodb.connect(env, options);
 		logger.log(ctx, 'database running', 'connected!');
-		wrapper.data(mongoConnect);
+		return wrapper.data(mongoConnect);
 	} catch (err) {
-		logger.log(ctx, 'database connection error', 'error!');
+		logger.log(ctx, err, 'error!');
 		wrapper.error(err, err.message, CODE.SERVICE_UNAVAILABLE);
 	}
 };
@@ -37,11 +39,11 @@ const addConnectionPool = () => {
 };
 
 const createConnectionPool = async () => {
-	connPool.map(async (currentConnection, index, err) => {
+	connPool.map(async (currentConnection, index) => {
 		const result = await createConnection(currentConnection.env);
-		if (err) {
+		if (result.err) {
 			connPool[index].db = currentConnection;
-		} else if (!err) {
+		} else {
 			connPool[index].db = result.data;
 		}
 	});
@@ -66,6 +68,8 @@ const isExistConnection = async (env) => {
 			'Connection must be created',
 			CODE.NOT_FOUND,
 		);
+
+	return wrapper.data(state);
 };
 
 const isConnected = async (state) => {
