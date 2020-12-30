@@ -47,18 +47,25 @@ class DatabaseCommands {
 	}
 
 	async findMany(params) {
+		const ctx = 'mongodb-findMany';
 		const dbName = await this.getDatabase();
 		const result = await mongoConnect.getConnection(this.env);
+		if (result.err) {
+			logger.log(ctx, result.err.message, 'Error mongodb connection');
+			return result;
+		}
 		try {
 			const cacheConnection = result.data.db;
 			const connection = cacheConnection.db(dbName);
 			const db = connection.collection(this.collectionName);
 			const recordset = await db.find(params).toArray();
 			if (validate.isEmpty(recordset)) {
-				return console.log(CODE.NOT_FOUND);
+				logger.log(ctx, CODE.BAD_REQUEST, 'Database error');
+				return wrapper.error('Data not found', CODE.NOT_FOUND);
 			}
 			return wrapper.data(recordset);
 		} catch (err) {
+			logger.log(ctx, err.message, 'Error find data in mongodb');
 			return wrapper.error(`Find Many => ${err.message}`);
 		}
 	}
