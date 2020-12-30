@@ -1,3 +1,5 @@
+const validate = require('validate.js');
+
 const mongoConnect = require('./db');
 const wrapper = require('../lib/wrapper');
 const logger = require('../lib/logger');
@@ -41,6 +43,23 @@ class DatabaseCommands {
 		} catch (err) {
 			logger.log(ctx, err.message, 'Error insert data in mongodb');
 			return wrapper.error(`Insert One => ${err.message}`);
+		}
+	}
+
+	async findMany(params) {
+		const dbName = await this.getDatabase();
+		const result = await mongoConnect.getConnection(this.env);
+		try {
+			const cacheConnection = result.data.db;
+			const connection = cacheConnection.db(dbName);
+			const db = connection.collection(this.collectionName);
+			const recordset = await db.find(params).toArray();
+			if (validate.isEmpty(recordset)) {
+				return console.log(CODE.NOT_FOUND);
+			}
+			return wrapper.data(recordset);
+		} catch (err) {
+			return wrapper.error(`Find Many => ${err.message}`);
 		}
 	}
 }

@@ -37,6 +37,7 @@ function Application() {
 		);
 	});
 
+	this.server.get('/api/users', userOps.getUsers);
 	this.server.post('/api/users', userOps.createUser);
 }
 
