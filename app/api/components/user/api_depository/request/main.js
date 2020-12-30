@@ -1,14 +1,18 @@
+const uuid = require('uuid');
+
 const wrapper = require('../../../../../lib/wrapper');
-const logger = require('../../../../../lib/logger');
 const { CODE } = require('../../../../../lib/http_code');
-const env = require('../../../../../config/config');
 
 const request = require('./request');
 
 class User {
 	async createUser(payload) {
-		// const ctx = 'create-user';
-		const user = await request.insertOne(payload);
+		let userData = {
+			userId: uuid(),
+			...payload,
+		};
+
+		const user = await request.insertOne(userData);
 		if (user.err) {
 			return wrapper.error(
 				'fail',
