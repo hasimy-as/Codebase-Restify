@@ -10,5 +10,4 @@ const findMany = async (payload) => {
 
 module.exports = {
 	findMany,
-	findOne
 };
