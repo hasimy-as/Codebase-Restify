@@ -8,7 +8,7 @@ const sendResponse = async (result, res) => {
 			res,
 			'success',
 			result,
-			'Your Request Has Been Processed',
+			'Request Processed Completely',
 		);
 	}
 };

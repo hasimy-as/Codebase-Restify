@@ -8,6 +8,12 @@ const findMany = async (payload) => {
 	return db.findMany(payload);
 };
 
+const findOne = async (payload) => {
+	const db = new mongodb(env.get('/mongo'));
+	db.setCollection(collection);
+	return db.findOne(payload);
+};
+
 module.exports = {
 	findMany,
 	findOne

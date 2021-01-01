@@ -38,7 +38,10 @@ function Application() {
 	});
 
 	this.server.get('/api/users', userOps.getUsers);
+	this.server.get('/api/users/:userId', userOps.getOneUser);
 	this.server.post('/api/users', userOps.createUser);
+	this.server.put('/api/users/:userId', userOps.updateUser);
+	this.server.del('/api/users/:userId', userOps.deleteUser);
 }
 
 module.exports = Application;

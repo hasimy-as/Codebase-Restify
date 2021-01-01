@@ -16,6 +16,19 @@ class User {
 		const { data } = user;
 		return wrapper.data(data, '', CODE.SUCCESS);
 	}
+
+	async getOneUser(payload) {
+		const user = await response.findOne({ userId: payload.userId });
+		if (user.err) {
+			return wrapper.error(
+				'error',
+				'User not found!',
+				CODE.NOT_FOUND,
+			);
+		}
+		const { data } = user;
+		return wrapper.data(data, '', CODE.SUCCESS);
+	}
 }
 
 module.exports = User;

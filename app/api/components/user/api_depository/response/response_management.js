@@ -5,6 +5,12 @@ const getUsers = async () => {
 	return user.getUsers();
 };
 
+const getOneUser = async (payload) => {
+	const user = new User();
+	return user.getOneUser(payload);
+};
+
 module.exports = {
 	getUsers,
+	getOneUser,
 };
