@@ -1,8 +1,3 @@
-/**
- * @description 
- * In Development
- */
-
 require('dotenv').config();
 const confidence = require('confidence');
 

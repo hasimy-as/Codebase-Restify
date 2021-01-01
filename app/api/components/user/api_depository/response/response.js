@@ -1,8 +1,3 @@
-/**
- * @description 
- * In Development
- */
-
 const mongodb = require('../../../../../database/db_commands');
 const env = require('../../../../../config/config');
 const collection = 'user';

@@ -1,8 +1,3 @@
-/**
- * @description 
- * In Development
- */
-
 const Application = require('./app/api/index');
 const mongoConnect = require('./app/database/db');
 const logger = require('./app/lib/logger');

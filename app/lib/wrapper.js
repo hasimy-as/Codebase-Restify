@@ -1,8 +1,3 @@
-/**
- * @description 
- * In Development
- */
-
 const { CODE } = require('./http_code');
 
 const data = (data, description = '', code = CODE.SUCCESS) => ({

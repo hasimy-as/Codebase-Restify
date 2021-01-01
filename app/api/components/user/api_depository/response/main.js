@@ -1,8 +1,3 @@
-/**
- * @description 
- * In Development
- */
-
 const wrapper = require('../../../../../lib/wrapper');
 const { CODE } = require('../../../../../lib/http_code');
 

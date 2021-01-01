@@ -1,8 +1,3 @@
-/**
- * @description 
- * In Development
- */
-
 const validate = require('validate.js');
 
 const mongoConnect = require('./db');

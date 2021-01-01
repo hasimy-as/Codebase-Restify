@@ -1,8 +1,3 @@
-/**
- * @description 
- * In Development
- */
-
 require('joi');
 
 const { sendResponse } = require('../../../../lib/responses');
