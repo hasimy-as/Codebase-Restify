@@ -16,4 +16,5 @@ const findOne = async (payload) => {
 
 module.exports = {
 	findMany,
+	findOne,
 };

@@ -16,10 +16,9 @@ class DatabaseCommands {
 	}
 
 	async getDatabase() {
-		const env = this.env.replace('//', '');
-		const pattern = new RegExp('/([a-zA-Z0-9-]+)?');
-		const dbName = pattern.exec(env);
-		return dbName[1];
+		const env = this.env.split('/').pop();
+		const dbName = validate.isEmpty(this.dbName) ? env : this.dbName;
+		return dbName;
 	}
 
 	async insertOne(document) {
