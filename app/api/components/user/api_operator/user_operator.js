@@ -18,7 +18,7 @@ const getOneUser = async (req, res) => {
 		params,
 	);
 	if (parameter.err) {
-		return sendResponse(isValid, res);
+		return sendResponse(parameter, res);
 	}
 	const result = await responseManage.getOneUser(parameter);
 	return sendResponse(result, res);
@@ -39,7 +39,7 @@ const updateUser = async (req, res) => {
 	body = Object.assign(body, params);
 	const data = await requestSchema.updateUser.validateAsync(body);
 	if (data.err) {
-		return sendResponse(isValid, res);
+		return sendResponse(data, res);
 	}
 	const result = await requestManage.updateUser(data);
 	return sendResponse(result, res);
@@ -51,7 +51,7 @@ const deleteUser = async (req, res) => {
 		params,
 	);
 	if (parameter.err) {
-		return sendResponse(isValid, res);
+		return sendResponse(parameter, res);
 	}
 	const result = await requestManage.deleteUser(parameter);
 	return sendResponse(result, res);
