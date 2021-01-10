@@ -4,7 +4,7 @@ const { expect } = require('chai');
 const ops = require('../../../../../../app/api/components/user/api_operator/user_operator');
 
 const requestManage = require('../../../../../../app/api/components/user/api_depository/request/request_management');
-const requestSchema = require('../../../../../../app/api/components/user/api_depository/request/request_management');
+const requestSchema = require('../../../../../../app/api/components/user/api_depository/request/request_schema');
 
 const responseManage = require('../../../../../../app/api/components/user/api_depository/response/response_management');
 const responseSchema = require('../../../../../../app/api/components/user/api_depository/response/response_schema');
@@ -85,6 +85,13 @@ describe('Unit user operator', () => {
 		it('should be a function', () => {
 			expect(ops.getOneUser).to.be.a('function');
 		});
+		it('should fail validating get user by userId schema', async () => {
+			sinon
+				.stub(responseSchema.getOneUserSchema, 'validateAsync')
+				.resolves({ err: true });
+			expect(await ops.getOneUser(req, res));
+			responseSchema.getOneUserSchema.validateAsync.restore();
+		});
 		it('should fail get user by userId', async () => {
 			sinon.stub(responseManage, 'getOneUser').resolves({ err: true });
 			expect(await ops.getOneUser(req, res));
@@ -103,6 +110,13 @@ describe('Unit user operator', () => {
 		};
 		it('should be a function', () => {
 			expect(ops.createUser).to.be.a('function');
+		});
+		it('should fail validating create user schema', async () => {
+			sinon
+				.stub(requestSchema.createUser, 'validateAsync')
+				.resolves({ err: true });
+			expect(await ops.createUser(req, res));
+			requestSchema.createUser.validateAsync.restore();
 		});
 		it('should fail to create user', async () => {
 			sinon.stub(requestManage, 'createUser').resolves({ err: true });
@@ -126,6 +140,13 @@ describe('Unit user operator', () => {
 		it('should be a function', () => {
 			expect(ops.updateUser).to.be.a('function');
 		});
+		it('should fail validating update exiting user schema', async () => {
+			sinon
+				.stub(requestSchema.updateUser, 'validateAsync')
+				.resolves({ err: true });
+			expect(await ops.updateUser(req, res));
+			requestSchema.updateUser.validateAsync.restore();
+		});
 		it('should fail to update existing user', async () => {
 			sinon.stub(requestManage, 'updateUser').resolves({ err: true });
 			expect(await ops.updateUser(req, res));
@@ -146,6 +167,13 @@ describe('Unit user operator', () => {
 		};
 		it('should be a function', () => {
 			expect(ops.deleteUser).to.be.a('function');
+		});
+		it('should fail validating delete user schema', async () => {
+			sinon
+				.stub(requestSchema.deleteUser, 'validateAsync')
+				.resolves({ err: true });
+			expect(await ops.deleteUser(req, res));
+			requestSchema.deleteUser.validateAsync.restore();
 		});
 		it('should fail to delete user', async () => {
 			sinon.stub(requestManage, 'deleteUser').resolves({ err: true });
