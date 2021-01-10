@@ -51,6 +51,10 @@
       "lcov",
       "text-summary"
     ],
+    "exclude": [
+      "server.js",
+      "coverage"
+    ],
     "all": true,
     "cache": true,
     "report-dir": "./coverage"
