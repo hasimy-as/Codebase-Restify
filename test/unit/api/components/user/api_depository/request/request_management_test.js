@@ -6,62 +6,62 @@ const requestManage = require('../../../../../../../app/api/components/user/api_
 const { CODE } = require('../../../../../../../app/lib/http_code');
 
 describe('Unit user request', () => {
-	let resultUser, resultDelete;
+  let resultUser, resultDelete;
 
-	resultUser = {
-		err: null,
-		message: '',
-		data: {
-			userId: 'e720b030-c441-4560-bb23-b88a60d2a1c1',
-			name: 'Hasimy',
-			address: 'Indonesia',
-		},
-		code: CODE.SUCCESS,
-	};
+  resultUser = {
+    err: null,
+    message: '',
+    data: {
+      userId: 'e720b030-c441-4560-bb23-b88a60d2a1c1',
+      name: 'Hasimy',
+      address: 'Indonesia',
+    },
+    code: CODE.SUCCESS,
+  };
 
   resultDelete = {
-		err: null,
-		message: '',
-		data: null,
-		code: CODE.SUCCESS,
-	};
+    err: null,
+    message: '',
+    data: null,
+    code: CODE.SUCCESS,
+  };
 
-	describe('Create user', () => {
-		it('should fail to create user', async () => {
-			sinon.stub(main.prototype, 'createUser').resolves({ err: true });
+  describe('Create user', () => {
+    it('should fail to create user', async () => {
+      sinon.stub(main.prototype, 'createUser').resolves({ err: true });
       await requestManage.createUser();
       main.prototype.createUser.restore();
-		});
+    });
     it('should success to create user', async () => {
-			sinon.stub(main.prototype, 'createUser').resolves(resultUser);
+      sinon.stub(main.prototype, 'createUser').resolves(resultUser);
       await requestManage.createUser();
       main.prototype.createUser.restore();
-		});
-	});
+    });
+  });
 
   describe('Update user', () => {
-		it('should fail to update user', async () => {
-			sinon.stub(main.prototype, 'updateUser').resolves({ err: true });
+    it('should fail to update user', async () => {
+      sinon.stub(main.prototype, 'updateUser').resolves({ err: true });
       await requestManage.updateUser();
       main.prototype.updateUser.restore();
-		});
+    });
     it('should success to update user', async () => {
-			sinon.stub(main.prototype, 'updateUser').resolves(resultUser);
+      sinon.stub(main.prototype, 'updateUser').resolves(resultUser);
       await requestManage.updateUser();
       main.prototype.updateUser.restore();
-		});
-	});
+    });
+  });
 
   describe('Delete user', () => {
-		it('should fail to delete user', async () => {
-			sinon.stub(main.prototype, 'deleteUser').resolves({ err: true });
+    it('should fail to delete user', async () => {
+      sinon.stub(main.prototype, 'deleteUser').resolves({ err: true });
       await requestManage.deleteUser();
       main.prototype.deleteUser.restore();
-		});
+    });
     it('should success to delete user', async () => {
-			sinon.stub(main.prototype, 'deleteUser').resolves(resultDelete);
+      sinon.stub(main.prototype, 'deleteUser').resolves(resultDelete);
       await requestManage.deleteUser();
       main.prototype.deleteUser.restore();
-		});
-	});
+    });
+  });
 });
