@@ -30,6 +30,7 @@ A quick peek at some of the top-level files and directories found in this projec
 
 ```
 <br />
+
 1. **`/app`**: This directory contains all of the code related to the back-end, such as APIs, configurations, database connections, and library files.
 
 2. **`/test`**: Tests for this projects are stored here. This project uses [Mocha](https://mochajs.org) as a testing framework.
@@ -49,6 +50,7 @@ A quick peek at some of the top-level files and directories found in this projec
 9. **`README.md`**: It's the file you're reading now! This text file contains useful informations about your project.
 
 10. **`server.js`**: This file is where the Restify server listens to the server which Port is already configured by you in the .env file.
+<br />
 
 ## Usage
 
