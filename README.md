@@ -4,7 +4,6 @@
   A back end project template using Restify as a Node.js framework.
 </p>
 
-<p align="center">
   [![Github license](https://img.shields.io/badge/License-MIT-yellow.svg)](https://raw.githubusercontent.com/hasimy-as/Codebase-Restify/master/LICENSE)
   [![npm](https://img.shields.io/npm/v/npm.svg)](https://www.npmjs.com/)
   [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://gitHub.com/hasimy-as/Codebase-Restify)
@@ -12,13 +11,13 @@
   [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](code_of_conduct.md)
   <br />
   <br />
-</p>
 
 ## What's inside?
 
 A quick peek at some of the top-level files and directories found in this project.
 
 ```console
+
 .
 ├── app
 ├── test
@@ -32,7 +31,9 @@ A quick peek at some of the top-level files and directories found in this projec
 ├── README.md
 ├── server.js
 
+
 ```
+
 
 1. **`/app`**: This directory contains all of the code related to the back-end, such as APIs, configurations, database connections, and library files.
 
@@ -53,6 +54,7 @@ A quick peek at some of the top-level files and directories found in this projec
 9. **`README.md`**: It's the file you're reading now! This text file contains useful informations about your project.
 
 10. **`server.js`**: This file is where the Restify server listens to the server which Port is already configured by you in the .env file.
+
 
 ## Usage
 
@@ -100,6 +102,8 @@ DELETE        {{url}}/api/users/:userId
 
 -   MIT © [Hasimy Md's License](https://raw.githubusercontent.com/hasimy-as/Codebase-Restify/master/LICENSE)
 -   [Code of Conduct](code-of-conduct.md)
+
+## Collaboration
 
 👨🏻‍💻 Want to collaborate? Fork the project and be a collaborator now!
 
