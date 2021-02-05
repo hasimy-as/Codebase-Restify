@@ -5,6 +5,11 @@ const createUser = async (payload) => {
   return user.createUser(payload);
 };
 
+const loginUser = async (payload) => {
+  const user = new User();
+  return user.loginUser(payload);
+};
+
 const updateUser = async (payload) => {
   const user = new User();
   return user.updateUser(payload);
@@ -16,6 +21,7 @@ const deleteUser = async (payload) => {
 };
 
 module.exports = {
+  loginUser,
   createUser,
   updateUser,
   deleteUser,
