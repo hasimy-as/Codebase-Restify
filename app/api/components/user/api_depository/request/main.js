@@ -45,13 +45,15 @@ class User {
     }
 
     let userData = {};
-    const { password, ...userProperties } = user;
+    const { password } = user;
     const userPassword = await crypt.decrypt(password);
 
     if (payload.password === userPassword) {
       userData = {
-        expiresIn: 864000,
-        ...userProperties
+        userId: user.userId,
+        username: user.username,
+        name: user.name,
+        expiresIn: 864000
       };
     } else {
       return wrapper.error('error', 'Password incorrect!', CODE.BAD_REQUEST);

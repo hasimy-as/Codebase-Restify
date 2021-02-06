@@ -5,8 +5,6 @@ const env = require('../../config/config');
 const wrapper = require('../../lib/wrapper');
 const { CODE } = require('../../lib/http_code');
 
-// const response = require('../components/user/api_depository/response/response');
-
 const getKey = (keyPath) => fs.readFileSync(keyPath, 'utf8');
 const verifyOptions = {
   algorithm: 'RS256',
@@ -21,11 +19,7 @@ const generateToken = async (payload) => {
 };
 
 const getToken = (headers) => {
-  if (
-    headers &&
-		headers.authorization &&
-		headers.authorization.includes('Bearer')
-  ) {
+  if (headers && headers.authorization && headers.authorization.includes('Bearer')) {
     const parted = headers.authorization.split(' ');
     if (parted.length === 2) {
       return parted[1];

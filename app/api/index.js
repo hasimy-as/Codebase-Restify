@@ -7,6 +7,7 @@ const basicAuth = require('./auth/basic_auth');
 const jwtAuth = require('./auth/jwt_auth');
 
 const userOps = require('./components/user/api_operator/user_operator');
+const documentOps = require('./components/document/api_operator/document_operator');
 
 function Application() {
   this.server = restify.createServer({
@@ -64,12 +65,20 @@ function Application() {
     );
   });
 
+  // User
   this.server.get('/api/users', jwtAuth.verifyToken, userOps.getUsers);
   this.server.get('/api/users/:userId', jwtAuth.verifyToken, userOps.getOneUser);
   this.server.post('/api/users/register', basicAuth.isAuthenticated, userOps.createUser);
   this.server.post('/api/users/login', basicAuth.isAuthenticated, userOps.loginUser);
   this.server.put('/api/users/:userId', jwtAuth.verifyToken, userOps.updateUser);
   this.server.del('/api/users/:userId', jwtAuth.verifyToken, userOps.deleteUser);
+
+  // Documents
+  this.server.get('/api/document', jwtAuth.verifyToken, documentOps.getDocument);
+  this.server.get('/api/document/:documentId', jwtAuth.verifyToken, documentOps.getDocumentById);
+  this.server.post('/api/document', jwtAuth.verifyToken, documentOps.createDocument);
+  this.server.put('/api/document/:documentId', jwtAuth.verifyToken, documentOps.updateDocument);
+  this.server.del('/api/document/:documentId', jwtAuth.verifyToken, documentOps.deleteDocument);
 }
 
 module.exports = Application;
