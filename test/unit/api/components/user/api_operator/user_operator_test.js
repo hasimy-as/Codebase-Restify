@@ -12,7 +12,7 @@ const responseSchema = require('../../../../../../app/api/components/user/api_de
 const { CODE } = require('../../../../../../app/lib/http_code');
 
 describe('Unit user operator', () => {
-  let res, payload, result, resultUser;
+  let res, payload, payloadLogin, result, resultUser;
   beforeEach(() => {
     res = {
       send: function () {
@@ -24,6 +24,13 @@ describe('Unit user operator', () => {
   payload = {
     name: 'Hasimy',
     address: 'Indonesia',
+    username: 'alkosim',
+    password: 'kosims'
+  };
+
+  payloadLogin = {
+    username: 'alkosim',
+    password: 'kosims'
   };
 
   result = {
@@ -34,11 +41,15 @@ describe('Unit user operator', () => {
         userId: 'e720b030-c441-4560-bb23-b88a60d2a1c1',
         name: 'Hasimy',
         address: 'Indonesia',
+        username: 'alkosim',
+        password: 'kosims'
       },
       {
         userId: 'a55bcea0-8f8a-4af8-b7c5-2f4b56d5aa1b',
         name: 'Hasims',
         address: 'Indonesia',
+        username: 'thesims12',
+        password: 'thesims'
       },
     ],
     code: CODE.SUCCESS,
@@ -51,6 +62,8 @@ describe('Unit user operator', () => {
       userId: 'e720b030-c441-4560-bb23-b88a60d2a1c1',
       name: 'Hasimy',
       address: 'Indonesia',
+      username: 'alkosim',
+      password: 'kosims'
     },
     code: CODE.SUCCESS,
   };
@@ -127,6 +140,33 @@ describe('Unit user operator', () => {
       sinon.stub(requestManage, 'createUser').resolves(resultUser);
       expect(await ops.createUser(req, res));
       requestManage.createUser.restore();
+    });
+  });
+
+  describe('Login user', () => {
+    const req = {
+      body: payloadLogin,
+    };
+
+    it('should be a function', () => {
+      expect(ops.loginUser).to.be.a('function');
+    });
+    it('should fail validating login schema', async () => {
+      sinon
+        .stub(requestSchema.loginUser, 'validateAsync')
+        .resolves({ err: true });
+      expect(await ops.loginUser(req, res));
+      requestSchema.loginUser.validateAsync.restore();
+    });
+    it('should fail to login', async () => {
+      sinon.stub(requestManage, 'loginUser').resolves({ err: true });
+      expect(await ops.loginUser(req, res));
+      requestManage.loginUser.restore();
+    });
+    it('should success to login', async () => {
+      sinon.stub(requestManage, 'loginUser').resolves(resultUser);
+      expect(await ops.loginUser(req, res));
+      requestManage.loginUser.restore();
     });
   });
 
