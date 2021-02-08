@@ -1,6 +1,6 @@
 const uuid = require('uuid');
 
-// const logger = require('../../../../../lib/logger');
+const logger = require('../../../../../lib/logger');
 const wrapper = require('../../../../../lib/wrapper');
 const { CODE } = require('../../../../../lib/http_code');
 
@@ -9,8 +9,10 @@ const response = require('../response/response');
 
 class Document {
   async createDocument(payload) {
+    const ctx = 'Document-createDocument';
     const findDocument = await response.findOne({ title: payload.title });
     if (findDocument.code === CODE.SUCCESS) {
+      logger.log(ctx, 'Document with inserted title already exist.', 'Error');
       return wrapper.error('error', 'Document with inserted title already exist', CODE.BAD_REQUEST);
     }
 
@@ -23,11 +25,8 @@ class Document {
 
     const document = await request.insertOne(documentData);
     if (document.err) {
-      return wrapper.error(
-        'fail',
-        'Failed to create document',
-        CODE.INTERNAL_ERROR,
-      );
+      logger.log(ctx, 'Failed to create document.', document.err);
+      return wrapper.error('fail', 'Failed to create document', CODE.INTERNAL_ERROR);
     }
 
     const { data } = document;
@@ -35,8 +34,10 @@ class Document {
   }
 
   async updateDocument(payload) {
+    const ctx = 'Document-updateDocument';
     const findDocumentId = await response.findOne({ documentId: payload.documentId });
     if (findDocumentId.err) {
+      logger.log(ctx, 'Document not found.', findDocumentId.err);
       return wrapper.error('error', 'Document not found!', CODE.NOT_FOUND);
     }
 
@@ -51,11 +52,8 @@ class Document {
       }},
     );
     if (document.err) {
-      return wrapper.error(
-        'fail',
-        'Failed to update document',
-        CODE.INTERNAL_ERROR,
-      );
+      logger.log(ctx, 'Failed to update document.', document.err);
+      return wrapper.error('fail', 'Failed to update document', CODE.INTERNAL_ERROR);
     }
 
     const { data } = document;
@@ -63,18 +61,17 @@ class Document {
   }
 
   async deleteDocument(payload) {
+    const ctx = 'Document-deleteDocument';
     const findDocumentId = await response.findOne({ documentId: payload.documentId });
     if (findDocumentId.err) {
+      logger.log(ctx, 'Document not found.', findDocumentId.err);
       return wrapper.error('error', 'Document not found!', CODE.NOT_FOUND);
     }
 
     const document = await request.deleteOne({ documentId: payload.documentId });
     if (document.err) {
-      return wrapper.error(
-        'fail',
-        'Failed to delete document',
-        CODE.INTERNAL_ERROR,
-      );
+      logger.log(ctx, 'Failed to delete document.', document.err);
+      return wrapper.error('fail', 'Failed to delete document', CODE.INTERNAL_ERROR);
     }
 
     const { data } = document;
