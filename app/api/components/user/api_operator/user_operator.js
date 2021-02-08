@@ -34,6 +34,16 @@ const createUser = async (req, res) => {
   return sendResponse(result, res);
 };
 
+const loginUser = async (req, res) => {
+  let { body } = req;
+  const data = await requestSchema.loginUser.validateAsync(body);
+  if (data.err) {
+    return sendResponse(data, res);
+  }
+  const result = await requestManage.loginUser(data);
+  return sendResponse(result, res);
+};
+
 const updateUser = async (req, res) => {
   let { body, params } = req;
   body = Object.assign(body, params);
@@ -61,6 +71,7 @@ module.exports = {
   getUsers,
   getOneUser,
   createUser,
+  loginUser,
   updateUser,
   deleteUser,
 };

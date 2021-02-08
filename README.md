@@ -2,10 +2,11 @@
 
 A back end project template using Restify as a Node.js framework.
 
+[![App version](https://img.shields.io/badge/Version-v.1.2-blue)](https://gitHub.com/hasimy-as/Codebase-Restify/releases)
 [![Github license](https://img.shields.io/badge/License-MIT-yellow.svg)](https://raw.githubusercontent.com/hasimy-as/Codebase-Restify/master/LICENSE)
 [![npm](https://img.shields.io/npm/v/npm.svg)](https://www.npmjs.com/)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://gitHub.com/hasimy-as/Codebase-Restify)
-[![Code coverage](https://img.shields.io/badge/coverage-97%25-green)](https://gitHub.com/hasimy-as/Codebase-Restify)
+[![Code coverage](https://img.shields.io/badge/Code_Coverage-92%25-green)](https://gitHub.com/hasimy-as/Codebase-Restify)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg)](code-of-conduct.md)
 <br />
 
@@ -91,7 +92,7 @@ DELETE        {{url}}/api/users/:userId
 
 ## Version
 
--   Current app version is on v1.1 🖥️
+-   Current app version is on v1.2 🖥️
 
 ## License and Conduct
 
