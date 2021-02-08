@@ -69,11 +69,7 @@ describe('Unit user operator', () => {
   };
 
   describe('Get users', () => {
-    const req = {
-      params: {
-        userId: 'e720b030-c441-4560-bb23-b88a60d2a1c1',
-      },
-    };
+    const req = {};
     it('should be a function', () => {
       expect(ops.getUsers).to.be.a('function');
     });

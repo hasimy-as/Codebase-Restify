@@ -61,6 +61,8 @@
     ],
     "exclude": [
       "server.js",
+      "app/api/auth",
+      "app/api/index.js",
       "test",
       "coverage"
     ],

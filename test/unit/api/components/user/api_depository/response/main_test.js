@@ -51,7 +51,7 @@ describe('Unit user main response', () => {
       response.findMany.restore();
     });
 
-    it('should fail get users', async () => {
+    it('should success get users', async () => {
       sinon.stub(response, 'findMany').resolves(result);
       const res = await user.getUsers();
       assert.equal(res.err, null);
