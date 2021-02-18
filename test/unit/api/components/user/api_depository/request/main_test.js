@@ -6,7 +6,7 @@ const { CODE } = require('../../../../../../../app/lib/http_code');
 const main = require('../../../../../../../app/api/components/user/api_depository/request/main');
 const request = require('../../../../../../../app/api/components/user/api_depository/request/request');
 const response = require('../../../../../../../app/api/components/user/api_depository/response/response');
-const jwtAuth = require('../../../../../../../app/api/auth/jwt_auth');
+// const jwtAuth = require('../../../../../../../app/api/auth/jwt_auth');
 
 const user = new main();
 
@@ -50,18 +50,18 @@ describe('Unit user main request', () => {
       IfL1_S2KN9nK-cjTYbxmt19EunLz3CoGtqH1FMsCUIhC9VjfeByCgJPAcXAHbdMkKqSlX8C1KC34nllbZQSCx4j3YhLTgNuDr5SLqQWtOAMhVntSv5TUxsrNAx0j
       gpcyi9NwXTdN8yQPfjG7Lg3cRNNkIet3YN6HiRc9zK20z6I4cEn-gDqEHOBSe4Eoe3njfF5ndZy92id-MySf26BKA`;
 
-  resultLogin = {
-    err: null,
-    message: '',
-    data: {
-      userId: 'e720b030-c441-4560-bb23-b88a60d2a1c1',
-      username: 'alkosim',
-      name: 'Hasimy',
-      expiresIn: 864000,
-      accessToken: token,
-    },
-    code: CODE.SUCCESS,
-  };
+  // resultLogin = {
+  //   err: null,
+  //   message: '',
+  //   data: {
+  //     userId: 'e720b030-c441-4560-bb23-b88a60d2a1c1',
+  //     username: 'alkosim',
+  //     name: 'Hasimy',
+  //     expiresIn: 864000,
+  //     accessToken: token,
+  //   },
+  //   code: CODE.SUCCESS,
+  // };
 
   describe('Create user', () => {
     it('should fail to create user duplicate', async () => {
