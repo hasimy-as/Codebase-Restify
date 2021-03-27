@@ -1,6 +1,6 @@
 # Codebase-Restify
 
-A back end project template using Restify as a Node.js framework, Redis for data caching, and Apache Kafka as a distributed event streaming platform.
+A back end project template using Restify as a Node.js framework and Redis for data caching.
 
 [![App version](https://img.shields.io/badge/Version-v.2.0.0-green)](https://gitHub.com/hasimy-as/Codebase-Restify/releases)
 [![Github license](https://img.shields.io/badge/License-MIT-yellow.svg)](https://raw.githubusercontent.com/hasimy-as/Codebase-Restify/master/LICENSE)
