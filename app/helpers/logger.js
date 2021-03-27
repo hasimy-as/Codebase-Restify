@@ -11,7 +11,7 @@ const logger = winston.createLogger({
   exitOnError: false
 });
 
-const log = (context, message, scope) => {
+const info = (context, message, scope) => {
   const obj = {
     context,
     scope,
@@ -20,6 +20,16 @@ const log = (context, message, scope) => {
   logger.info(obj);
 };
 
+const error = (context, message, error) => {
+  const obj = {
+    context,
+    error,
+    message: message.toString()
+  };
+  logger.error(obj);
+};
+
 module.exports = {
-  log
+  info,
+  error
 };

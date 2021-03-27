@@ -1,5 +1,5 @@
-const logger = require('../../../../../lib/logger');
-const wrapper = require('../../../../../lib/wrapper');
+const logger = require('../../../../../helpers/logger');
+const wrapper = require('../../../../../helpers/wrapper');
 const { CODE } = require('../../../../../lib/http_code');
 
 const response = require('./response');
@@ -9,7 +9,7 @@ class User {
     const ctx = 'User-getUsers';
     const user = await response.findMany();
     if (user.err) {
-      logger.log(ctx, 'Application error.', user.err);
+      logger.error(ctx, 'Application error.', user.err);
       return wrapper.error('error', 'Application error', CODE.INTERNAL_ERROR);
     }
     const { data } = user;
@@ -20,7 +20,7 @@ class User {
     const ctx = 'User-getOneUser';
     const user = await response.findOne({ userId: payload.userId });
     if (user.err) {
-      logger.log(ctx, 'User not found', user.err);
+      logger.error(ctx, 'User not found', user.err);
       return wrapper.error('error', 'User not found!', CODE.NOT_FOUND);
     }
     const { data } = user;

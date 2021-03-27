@@ -1,6 +1,6 @@
 require('joi');
 
-const { sendResponse } = require('../../../../lib/responses');
+const { sendResponse } = require('../../../../helpers/response');
 const requestSchema = require('../api_depository/request/request_schema');
 const requestManage = require('../api_depository/request/request_management');
 

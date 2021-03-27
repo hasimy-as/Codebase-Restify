@@ -1,7 +1,7 @@
 const restify = require('restify');
 const corsMiddleware = require('cors');
 
-const wrapper = require('../lib/wrapper');
+const wrapper = require('../helpers/wrapper');
 const project = require('../../package.json');
 const basicAuth = require('./auth/basic_auth');
 const jwtAuth = require('./auth/jwt_auth');

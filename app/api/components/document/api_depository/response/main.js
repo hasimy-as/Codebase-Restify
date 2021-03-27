@@ -1,5 +1,5 @@
-const logger = require('../../../../../lib/logger');
-const wrapper = require('../../../../../lib/wrapper');
+const logger = require('../../../../../helpers/logger');
+const wrapper = require('../../../../../helpers/wrapper');
 const { CODE } = require('../../../../../lib/http_code');
 
 const response = require('./response');
@@ -9,7 +9,7 @@ class Document {
     const ctx = 'Document-getDocument';
     const document = await response.findMany();
     if (document.err) {
-      logger.log(ctx, 'Application error.', document.err);
+      logger.error(ctx, 'Application error.', document.err);
       return wrapper.error('error', 'Application error', CODE.INTERNAL_ERROR);
     }
     const { data } = document;
@@ -20,7 +20,7 @@ class Document {
     const ctx = 'Document-getDocumentById';
     const document = await response.findOne({ documentId: payload.documentId });
     if (document.err) {
-      logger.log(ctx, 'Document not found.', document.err);
+      logger.error(ctx, 'Document not found.', document.err);
       return wrapper.error('error', 'Document not found!', CODE.NOT_FOUND);
     }
     const { data } = document;

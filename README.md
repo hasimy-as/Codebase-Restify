@@ -2,7 +2,7 @@
 
 A back end project template using Restify as a Node.js framework, Redis for data caching, and Apache Kafka as a distributed event streaming platform.
 
-[![App version](https://img.shields.io/badge/Version-v.1.2.1-blue)](https://gitHub.com/hasimy-as/Codebase-Restify/releases)
+[![App version](https://img.shields.io/badge/Version-v.2.0.0-green)](https://gitHub.com/hasimy-as/Codebase-Restify/releases)
 [![Github license](https://img.shields.io/badge/License-MIT-yellow.svg)](https://raw.githubusercontent.com/hasimy-as/Codebase-Restify/master/LICENSE)
 [![npm](https://img.shields.io/npm/v/npm.svg)](https://www.npmjs.com/)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://gitHub.com/hasimy-as/Codebase-Restify)
@@ -17,7 +17,6 @@ A quick peek at some of the top-level files and directories found in this projec
 ```console
 
 Updated soon.
-
 
 ```
 

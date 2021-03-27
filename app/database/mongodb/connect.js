@@ -1,46 +1,46 @@
 const mongodb = require('mongodb').MongoClient;
 const validate = require('validate.js');
 
-const { CODE } = require('../lib/http_code');
-const logger = require('../lib/logger');
-const wrapper = require('../lib/wrapper');
-const env = require('../config/config');
+const { CODE } = require('../../lib/http_code');
+const logger = require('../../helpers/logger');
+const wrapper = require('../../helpers/wrapper');
+const config = require('../../config/config');
 
-const ctx = 'db-connection';
+const ctx = 'Db-connection';
 const connPool = [];
 const conn = () => {
-  const connState = { index: 0, env: '', db: null };
+  const connState = { index: 0, config: '', db: null };
   return connState;
 };
 
-const createConnection = async (env) => {
+const createConnection = async (config) => {
   const options = {
     poolSize: 50,
-    keepAlive: 5000,
-    socketTimeoutMS: 5000,
-    connectTimeoutMS: 5000,
+    keepAlive: 15000,
+    socketTimeoutMS: 15000,
+    connectTimeoutMS: 15000,
     useNewUrlParser: true,
     useUnifiedTopology: true,
   };
   try {
-    const mongoConnect = await mongodb.connect(env, options);
-    logger.log(ctx, 'database running', 'connected!');
+    const mongoConnect = await mongodb.connect(config, options);
+    logger.info(ctx, 'Database running', 'Connected!');
     return wrapper.data(mongoConnect);
   } catch (err) {
-    logger.log(ctx, err, 'error!');
+    logger.error(ctx, err, 'Error!');
     wrapper.error(err, err.message, CODE.SERVICE_UNAVAILABLE);
   }
 };
 
 const addConnectionPool = () => {
   const connection = conn();
-  connection.env = env.get('/mongo');
+  connection.config = config.get('/mongo');
   return connPool.push(connection);
 };
 
 const createConnectionPool = async () => {
   connPool.map(async (currentConnection, index) => {
-    const result = await createConnection(currentConnection.env);
+    const result = await createConnection(currentConnection.config);
     if (result.err) {
       connPool[index].db = currentConnection;
     } else {
@@ -54,10 +54,10 @@ const init = () => {
   createConnectionPool();
 };
 
-const isExistConnection = async (env) => {
+const isExistConnection = async (config) => {
   let state = {};
   connPool.map((currentConnection) => {
-    if (currentConnection.env === env) {
+    if (currentConnection.config === config) {
       state = currentConnection;
     }
     return state;
@@ -85,10 +85,10 @@ const isConnected = async (state) => {
   return wrapper.data(state);
 };
 
-const getConnection = async (env) => {
+const getConnection = async (config) => {
   let connectionIndex;
   const checkConnection = async () => {
-    const result = await isExistConnection(env);
+    const result = await isExistConnection(config);
     if (result.err) {
       return result;
     }
@@ -99,7 +99,7 @@ const getConnection = async (env) => {
 
   const result = await checkConnection();
   if (result.err) {
-    const state = await createConnection(env);
+    const state = await createConnection(config);
     if (state.err) {
       wrapper.data(connPool[connectionIndex]);
     }

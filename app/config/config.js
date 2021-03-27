@@ -12,7 +12,13 @@ const config = {
   ],
   secretKey: process.env.SECRET_KEY,
   publicKey: process.env.PUBLIC_KEY,
-  privateKey: process.env.PRIVATE_KEY
+  privateKey: process.env.PRIVATE_KEY,
+  redis: {
+    port: process.env.REDIS_PORT,
+    host: process.env.REDIS_HOST,
+    password: process.env.REDIS_PASSWORD,
+    index: 0
+  },
 };
 
 const store = new confidence.Store(config);

@@ -1,4 +1,4 @@
-const mongodb = require('../../../../../database/db_commands');
+const mongodb = require('../../../../../database/mongodb/commands');
 const env = require('../../../../../config/config');
 const collection = 'user';
 

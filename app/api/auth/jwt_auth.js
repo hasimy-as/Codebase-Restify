@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const fs = require('fs');
 
 const env = require('../../config/config');
-const wrapper = require('../../lib/wrapper');
+const wrapper = require('../../helpers/wrapper');
 const { CODE } = require('../../lib/http_code');
 
 const getKey = (keyPath) => fs.readFileSync(keyPath, 'utf8');
