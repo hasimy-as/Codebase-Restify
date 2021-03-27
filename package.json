@@ -1,6 +1,6 @@
 {
   "name": "codebase-restify",
-  "version": "1.2.1",
+  "version": "2.0.0",
   "description": "A back end project template using Restify as a Node.js framework.",
   "main": "server.js",
   "scripts": {
