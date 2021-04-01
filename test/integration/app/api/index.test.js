@@ -1,8 +1,9 @@
 const hippie = require('hippie');
+
 const { CODE } = require('../../../../app/lib/http_code');
 const Application = require('../../../../app/api/index');
 
-describe('Integration main server', () => {
+describe('Server', () => {
   beforeEach(function () {
     let app = new Application();
     this.server = app.server;
@@ -11,6 +12,7 @@ describe('Integration main server', () => {
   afterEach(function () {
     this.server.close();
   });
+
   it('should return success code in accessing root', function (done) {
     hippie(this.server).get('/').expectStatus(CODE.SUCCESS).end(done);
   });

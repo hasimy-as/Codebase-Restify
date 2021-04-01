@@ -13,8 +13,8 @@ class Document {
     const ctx = 'Document-getDocument';
     const document = await this.qProcess.findMany();
     if (document.err) {
-      logger.error(ctx, 'Application error.', document.err);
-      return wrapper.error('error', 'Application error', CODE.INTERNAL_ERROR);
+      logger.error(ctx, 'Cannot get all documents.', document.err);
+      return wrapper.error('error', 'Cannot get all documents!', CODE.INTERNAL_ERROR);
     }
     const { data } = document;
     return wrapper.data(data, '', CODE.SUCCESS);

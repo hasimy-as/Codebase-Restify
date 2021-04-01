@@ -24,7 +24,7 @@ class User {
     const { opts, ...payloadVal } = payload;
     if (opts.roles !== ROLES.SUPER_ADMIN) {
       logger.error(ctx, 'This account is not an admin.', 'Error');
-      return wrapper.error('fail', 'This account is not an admin', CODE.UNAUTHORIZED);
+      return wrapper.error('fail', 'This account is not an admin!', CODE.UNAUTHORIZED);
     }
 
     const findEmail = await this.qProcess.findOne({ email: payload.email });
@@ -42,8 +42,8 @@ class User {
     });
 
     if (userErr) {
-      logger.error(ctx, 'Failed to create user.', user.err);
-      return wrapper.error('fail', 'Failed to create user', CODE.INTERNAL_ERROR);
+      logger.error(ctx, 'Failed to create user.', userErr);
+      return wrapper.error('fail', 'Failed to create user!', CODE.INTERNAL_ERROR);
     }
 
     return wrapper.data(user, '', CODE.SUCCESS);
@@ -90,7 +90,7 @@ class User {
 
       return wrapper.data(result, 'Logged in', CODE.SUCCESS);
     }
-    return wrapper.error('fail', 'Account is not an admin!', CODE.UNAUTHORIZED);
+    return wrapper.error('fail', 'Account is not a user!', CODE.UNAUTHORIZED);
   }
 
   async updateUser(payload) {
@@ -120,7 +120,7 @@ class User {
     );
     if (userErr) {
       logger.error(ctx, 'Failed to update user.', userErr);
-      return wrapper.error('fail', 'Failed to update user', CODE.INTERNAL_ERROR);
+      return wrapper.error('fail', 'Failed to update user!', CODE.INTERNAL_ERROR);
     }
 
     return wrapper.data(user, '', CODE.SUCCESS);
@@ -143,7 +143,7 @@ class User {
     const { data: user, err: userErr} = await this.process.deleteOne({ userId: payload.userId });
     if (userErr) {
       logger.error(ctx, 'Failed to delete user.', userErr);
-      return wrapper.error('fail', 'Failed to delete user', CODE.INTERNAL_ERROR);
+      return wrapper.error('fail', 'Failed to delete user!', CODE.INTERNAL_ERROR);
     }
 
     return wrapper.data(user, '', CODE.SUCCESS);

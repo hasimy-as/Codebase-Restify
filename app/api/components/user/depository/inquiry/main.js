@@ -13,8 +13,8 @@ class User {
     const ctx = 'User-getUsers';
     const user = await this.qProcess.findMany();
     if (user.err) {
-      logger.error(ctx, 'Application error.', user.err);
-      return wrapper.error('error', 'Application error', CODE.INTERNAL_ERROR);
+      logger.error(ctx, 'Cannot get all users.', user.err);
+      return wrapper.error('error', 'Cannot get all users!', CODE.INTERNAL_ERROR);
     }
     const { data } = user;
     return wrapper.data(data, '', CODE.SUCCESS);

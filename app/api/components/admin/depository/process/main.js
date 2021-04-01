@@ -24,7 +24,7 @@ class Admin {
     const findEmail = await this.qProcess.findOne({ email: payload.email });
     if (findEmail.code === CODE.SUCCESS) {
       logger.error(ctx, 'Email has been used.', 'Error');
-      return wrapper.error('error', 'Email has been used', CODE.BAD_REQUEST);
+      return wrapper.error('error', 'Email has been used!', CODE.BAD_REQUEST);
     }
 
     const password = await crypt.encrypt(payload.password);
@@ -36,8 +36,8 @@ class Admin {
     });
 
     if (adminErr) {
-      logger.error(ctx, 'Failed to create admin.', admin.err);
-      return wrapper.error('fail', 'Failed to create admin', CODE.INTERNAL_ERROR);
+      logger.error(ctx, 'Failed to create admin.', adminErr);
+      return wrapper.error('fail', 'Failed to create admin!', CODE.INTERNAL_ERROR);
     }
 
     return wrapper.data(admin, '', CODE.SUCCESS);
@@ -82,7 +82,7 @@ class Admin {
         accessToken: token
       };
 
-      return wrapper.data(result, 'Logged in', CODE.SUCCESS);
+      return wrapper.data(result, 'Logged in.', CODE.SUCCESS);
     }
     return wrapper.error('fail', 'Account is not an admin!', CODE.UNAUTHORIZED);
   }
@@ -113,8 +113,8 @@ class Admin {
       },
     );
     if (adminErr) {
-      logger.error(ctx, 'Failed to update admin.', admin.err);
-      return wrapper.error('fail', 'Failed to update admin', CODE.INTERNAL_ERROR);
+      logger.error(ctx, 'Failed to update admin.', adminErr);
+      return wrapper.error('fail', 'Failed to update admin!', CODE.INTERNAL_ERROR);
     }
 
     return wrapper.data(admin, '', CODE.SUCCESS);
@@ -137,7 +137,7 @@ class Admin {
     const { data: admin, err: adminErr} = await this.process.deleteOne({ adminId: payload.adminId });
     if (adminErr) {
       logger.error(ctx, 'Failed to delete admin.', adminErr);
-      return wrapper.error('fail', 'Failed to delete admin', CODE.INTERNAL_ERROR);
+      return wrapper.error('fail', 'Failed to delete admin!', CODE.INTERNAL_ERROR);
     }
 
     return wrapper.data(admin, '', CODE.SUCCESS);
