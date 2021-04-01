@@ -46,7 +46,7 @@ class Document {
 
   async updateDocument(payload) {
     const ctx = 'Document-updateDocument';
-    const { opts, ...payloadVal } = payload;
+    const { opts } = payload;
     if (opts.roles !== ROLES.USER) {
       logger.error(ctx, 'This account is not a user.', 'Error');
       return wrapper.error('fail', 'This account is not a user!', CODE.UNAUTHORIZED);
