@@ -117,7 +117,7 @@ describe('Document processMain', () => {
     it('should fail if access create is not a user', async () => {
       payload.opts.roles = ROLES.SUPER_ADMIN;
       sinon.stub(qProcess, 'findOne').resolves();
-      const res = await main.createDocument(payload);
+      const res = await main.deleteDocument(payload);
       assert.deepEqual(res.err, 'fail');
       assert.deepEqual(res.code, CODE.UNAUTHORIZED);
       assert.deepEqual(res.message, 'This account is not a user!');
