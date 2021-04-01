@@ -9,5 +9,5 @@ app.server.listen(process.env.PORT || config.get('/port'), (err) => {
   mongoConnect.init();
   if (err) throw err;
   let ctx = 'App-listen';
-  logger.info(ctx, 'Application running', 'Connected!');
+  logger.info(ctx, 'Connected!', 'Server');
 });

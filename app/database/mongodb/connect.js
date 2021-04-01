@@ -24,7 +24,7 @@ const createConnection = async (config) => {
   };
   try {
     const mongoConnect = await mongodb.connect(config, options);
-    logger.info(ctx, 'Database running', 'Connected!');
+    logger.info(ctx, 'Established!', 'Database connection');
     return wrapper.data(mongoConnect);
   } catch (err) {
     logger.error(ctx, err, 'Error!');

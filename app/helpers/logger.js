@@ -1,6 +1,6 @@
 const winston = require('winston');
 
-const logger = winston.createLogger({
+const logger = new winston.Logger({
   transports: [ new winston.transports.Console({
     level: 'info',
     handleExceptions: true,
@@ -11,23 +11,9 @@ const logger = winston.createLogger({
   exitOnError: false
 });
 
-const info = (context, message, scope) => {
-  const obj = {
-    context,
-    scope,
-    message: message.toString()
-  };
-  logger.info(obj);
-};
+const info = (context, message, scope) => logger.info({ context, scope, message: message.toString() });
 
-const error = (context, message, error) => {
-  const obj = {
-    context,
-    error,
-    message: message.toString()
-  };
-  logger.error(obj);
-};
+const error = (context, message, error) => logger.error({ context, error, message: message.toString() });
 
 module.exports = {
   info,
