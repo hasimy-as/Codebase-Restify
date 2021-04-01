@@ -6,8 +6,8 @@ const config = require('./app/config/config');
 const app = new Application();
 
 app.server.listen(process.env.PORT || config.get('/port'), (err) => {
-  mongoConnect.init();
-  if (err) throw err;
   let ctx = 'App-listen';
+  if (err) throw logger.error(ctx, err, 'Server');
+  mongoConnect.init();
   logger.info(ctx, 'Connected!', 'Server');
 });
