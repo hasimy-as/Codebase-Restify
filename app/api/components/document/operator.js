@@ -28,28 +28,28 @@ const createDocument = async (req, res) => {
   if (data.err) {
     return sendResponse(data, res);
   }
-  const result = await processHandler.createDocument(data, { opts });
+  const result = await processHandler.createDocument({ ...data, opts });
   return sendResponse(result, res);
 };
 
 const updateDocument = async (req, res) => {
-  let { body, params } = req;
+  let { body, params, opts } = req;
   body = Object.assign(body, params);
   const data = await processSchema.updateDocument.validateAsync(body);
   if (data.err) {
     return sendResponse(data, res);
   }
-  const result = await processHandler.updateDocument(data);
+  const result = await processHandler.updateDocument({ ...data, opts });
   return sendResponse(result, res);
 };
 
 const deleteDocument = async (req, res) => {
-  const { params } = req;
+  const { params, opts } = req;
   const parameter = await processSchema.deleteDocument.validateAsync(params);
   if (parameter.err) {
     return sendResponse(parameter, res);
   }
-  const result = await processHandler.deleteDocument(parameter);
+  const result = await processHandler.deleteDocument({ ...parameter, opts });
   return sendResponse(result, res);
 };
 

@@ -23,8 +23,8 @@ function Application() {
     multiples: true,
     mapParams: true
   }));
-  this.server.use(restify.plugins.authorizationParser());
 
+  this.server.use(restify.plugins.authorizationParser());
   this.server.use(corsMiddleware());
   this.server.use((req, res, next) => {
     if (req.method === 'OPTIONS') {
@@ -32,7 +32,16 @@ function Application() {
     }
     return next();
   });
-  this.server.opts('/.*/', (req, res, next) => {
+
+  this.server.pre(corsMiddleware({
+    preflightMaxAge: 5,
+    allowHeaders: ['API-Token'],
+    exposeHeaders: ['API-Token-Expiry'],
+    origins: 'http://localhost:5000',
+    credentials: true
+  }));
+
+  this.server.opts('/\\.*/', (req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header(
       'Access-Control-Allow-Methods',
@@ -56,7 +65,6 @@ function Application() {
   });
 
   this.server.use(basicAuth.init());
-
   this.server.get('/', (req, res) => {
     wrapper.response(
       res,
@@ -83,11 +91,11 @@ function Application() {
   this.server.del('/api/users/:userId', jwtAuth.verifyToken, user.deleteUser);
 
   // Documents
-  // this.server.get('/api/document', jwtAuth.verifyToken, document.getDocument);
-  // this.server.get('/api/document/:documentId', jwtAuth.verifyToken, document.getDocumentById);
-  // this.server.post('/api/document', jwtAuth.verifyToken, document.createDocument);
-  // this.server.put('/api/document/:documentId', jwtAuth.verifyToken, document.updateDocument);
-  // this.server.del('/api/document/:documentId', jwtAuth.verifyToken, document.deleteDocument);
+  this.server.get('/api/document', jwtAuth.verifyToken, document.getDocument);
+  this.server.get('/api/document/:documentId', jwtAuth.verifyToken, document.getDocumentById);
+  this.server.post('/api/document', jwtAuth.verifyToken, document.createDocument);
+  this.server.put('/api/document/:documentId', jwtAuth.verifyToken, document.updateDocument);
+  this.server.del('/api/document/:documentId', jwtAuth.verifyToken, document.deleteDocument);
 }
 
 module.exports = Application;
