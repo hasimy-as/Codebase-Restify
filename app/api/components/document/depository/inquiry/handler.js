@@ -1,12 +1,15 @@
+const mongodb = require('../../../../../database/mongodb/commands');
+const config = require('../../../../../config/config');
+const db = new mongodb(config.get('/mongo'));
+
 const Document = require('./main');
+const document = new Document(db);
 
 const getDocument = async () => {
-  const document = new Document();
   return document.getDocument();
 };
 
 const getDocumentById = async (payload) => {
-  const document = new Document();
   return document.getDocumentById(payload);
 };
 

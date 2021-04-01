@@ -1,17 +1,19 @@
+const mongodb = require('../../../../../database/mongodb/commands');
+const config = require('../../../../../config/config');
+const db = new mongodb(config.get('/mongo'));
+
 const Document = require('./main');
+const document = new Document(db);
 
 const createDocument = async (payload) => {
-  const document = new Document();
   return document.createDocument(payload);
 };
 
 const updateDocument = async (payload) => {
-  const document = new Document();
   return document.updateDocument(payload);
 };
 
 const deleteDocument = async (payload) => {
-  const document = new Document();
   return document.deleteDocument(payload);
 };
 

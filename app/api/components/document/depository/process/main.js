@@ -4,13 +4,18 @@ const logger = require('../../../../../helpers/logger');
 const wrapper = require('../../../../../helpers/wrapper');
 const { CODE } = require('../../../../../lib/http_code');
 
-const request = require('./request');
-const response = require('../response/response');
+const Command = require('./command');
+const Query = require('../inquiry/query');
 
 class Document {
+  constructor(db) {
+    this.process = new Command(db);
+    this.qProcess = new Query(db);
+  }
+
   async createDocument(payload) {
     const ctx = 'Document-createDocument';
-    const findDocument = await response.findOne({ title: payload.title });
+    const findDocument = await this.qProcess.findOne({ title: payload.title });
     if (findDocument.code === CODE.SUCCESS) {
       logger.error(ctx, 'Document with inserted title already exist.', 'Error');
       return wrapper.error('error', 'Document with inserted title already exist', CODE.BAD_REQUEST);
@@ -23,7 +28,7 @@ class Document {
       createdBy: payload.userId
     };
 
-    const document = await request.insertOne(documentData);
+    const document = await this.process.insertOne(documentData);
     if (document.err) {
       logger.error(ctx, 'Failed to create document.', document.err);
       return wrapper.error('fail', 'Failed to create document', CODE.INTERNAL_ERROR);
@@ -35,13 +40,13 @@ class Document {
 
   async updateDocument(payload) {
     const ctx = 'Document-updateDocument';
-    const findDocumentId = await response.findOne({ documentId: payload.documentId });
+    const findDocumentId = await this.qProcess.findOne({ documentId: payload.documentId });
     if (findDocumentId.err) {
       logger.error(ctx, 'Document not found.', findDocumentId.err);
       return wrapper.error('error', 'Document not found!', CODE.NOT_FOUND);
     }
 
-    const document = await request.updateOne(
+    const document = await this.process.updateOne(
       { documentId: payload.documentId },
       { $set: {
         title: payload.title,
@@ -62,13 +67,13 @@ class Document {
 
   async deleteDocument(payload) {
     const ctx = 'Document-deleteDocument';
-    const findDocumentId = await response.findOne({ documentId: payload.documentId });
+    const findDocumentId = await this.qProcess.findOne({ documentId: payload.documentId });
     if (findDocumentId.err) {
       logger.error(ctx, 'Document not found.', findDocumentId.err);
       return wrapper.error('error', 'Document not found!', CODE.NOT_FOUND);
     }
 
-    const document = await request.deleteOne({ documentId: payload.documentId });
+    const document = await this.process.deleteOne({ documentId: payload.documentId });
     if (document.err) {
       logger.error(ctx, 'Failed to delete document.', document.err);
       return wrapper.error('fail', 'Failed to delete document', CODE.INTERNAL_ERROR);

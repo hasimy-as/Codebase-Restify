@@ -6,8 +6,9 @@ const project = require('../../package.json');
 const basicAuth = require('./auth/basic_auth');
 const jwtAuth = require('./auth/jwt_auth');
 
-const userOps = require('./components/user/api_operator/user_operator');
-const documentOps = require('./components/document/api_operator/document_operator');
+const user = require('./components/user/operator');
+const admin = require('./components/admin/operator');
+const document = require('./components/document/operator');
 
 function Application() {
   this.server = restify.createServer({
@@ -65,20 +66,28 @@ function Application() {
     );
   });
 
+  // Admin
+  this.server.get('/api/admin', jwtAuth.verifyToken, admin.getAdmins);
+  this.server.get('/api/admin/:adminId', jwtAuth.verifyToken, admin.getAdminById);
+  this.server.post('/api/admin', basicAuth.isAuthenticated, admin.createAdmin);
+  this.server.post('/api/admin/login', basicAuth.isAuthenticated, admin.loginAdmin);
+  this.server.put('/api/admin/:adminId', jwtAuth.verifyToken, admin.updateAdmin);
+  this.server.del('/api/admin/:adminId', jwtAuth.verifyToken, admin.deleteAdmin);
+
   // User
-  this.server.get('/api/users', jwtAuth.verifyToken, userOps.getUsers);
-  this.server.get('/api/users/:userId', jwtAuth.verifyToken, userOps.getOneUser);
-  this.server.post('/api/users/register', basicAuth.isAuthenticated, userOps.createUser);
-  this.server.post('/api/users/login', basicAuth.isAuthenticated, userOps.loginUser);
-  this.server.put('/api/users/:userId', jwtAuth.verifyToken, userOps.updateUser);
-  this.server.del('/api/users/:userId', jwtAuth.verifyToken, userOps.deleteUser);
+  this.server.get('/api/users', basicAuth.isAuthenticated, user.getUsers);
+  this.server.get('/api/users/:userId', jwtAuth.verifyToken, user.getUserById);
+  this.server.post('/api/users', jwtAuth.verifyToken, user.createUser);
+  this.server.post('/api/users/login', basicAuth.isAuthenticated, user.loginUser);
+  this.server.put('/api/users/:userId', jwtAuth.verifyToken, user.updateUser);
+  this.server.del('/api/users/:userId', jwtAuth.verifyToken, user.deleteUser);
 
   // Documents
-  this.server.get('/api/document', jwtAuth.verifyToken, documentOps.getDocument);
-  this.server.get('/api/document/:documentId', jwtAuth.verifyToken, documentOps.getDocumentById);
-  this.server.post('/api/document', jwtAuth.verifyToken, documentOps.createDocument);
-  this.server.put('/api/document/:documentId', jwtAuth.verifyToken, documentOps.updateDocument);
-  this.server.del('/api/document/:documentId', jwtAuth.verifyToken, documentOps.deleteDocument);
+  // this.server.get('/api/document', jwtAuth.verifyToken, document.getDocument);
+  // this.server.get('/api/document/:documentId', jwtAuth.verifyToken, document.getDocumentById);
+  // this.server.post('/api/document', jwtAuth.verifyToken, document.createDocument);
+  // this.server.put('/api/document/:documentId', jwtAuth.verifyToken, document.updateDocument);
+  // this.server.del('/api/document/:documentId', jwtAuth.verifyToken, document.deleteDocument);
 }
 
 module.exports = Application;

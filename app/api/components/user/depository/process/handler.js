@@ -1,22 +1,23 @@
+const mongodb = require('../../../../../database/mongodb/commands');
+const config = require('../../../../../config/config');
+const db = new mongodb(config.get('/mongo'));
+
 const User = require('./main');
+const user = new User(db);
 
 const createUser = async (payload) => {
-  const user = new User();
   return user.createUser(payload);
 };
 
 const loginUser = async (payload) => {
-  const user = new User();
   return user.loginUser(payload);
 };
 
 const updateUser = async (payload) => {
-  const user = new User();
   return user.updateUser(payload);
 };
 
 const deleteUser = async (payload) => {
-  const user = new User();
   return user.deleteUser(payload);
 };
 

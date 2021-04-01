@@ -2,12 +2,16 @@ const logger = require('../../../../../helpers/logger');
 const wrapper = require('../../../../../helpers/wrapper');
 const { CODE } = require('../../../../../lib/http_code');
 
-const response = require('./response');
+const Query = require('./query');
 
 class User {
+  constructor(db) {
+    this.qProcess = new Query(db);
+  }
+
   async getUsers() {
     const ctx = 'User-getUsers';
-    const user = await response.findMany();
+    const user = await this.qProcess.findMany();
     if (user.err) {
       logger.error(ctx, 'Application error.', user.err);
       return wrapper.error('error', 'Application error', CODE.INTERNAL_ERROR);
@@ -16,9 +20,9 @@ class User {
     return wrapper.data(data, '', CODE.SUCCESS);
   }
 
-  async getOneUser(payload) {
-    const ctx = 'User-getOneUser';
-    const user = await response.findOne({ userId: payload.userId });
+  async getUserById(payload) {
+    const ctx = 'User-getUserById';
+    const user = await this.qProcess.findOne({ userId: payload.userId });
     if (user.err) {
       logger.error(ctx, 'User not found', user.err);
       return wrapper.error('error', 'User not found!', CODE.NOT_FOUND);

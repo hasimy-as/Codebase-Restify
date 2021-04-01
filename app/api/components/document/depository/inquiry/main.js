@@ -2,12 +2,16 @@ const logger = require('../../../../../helpers/logger');
 const wrapper = require('../../../../../helpers/wrapper');
 const { CODE } = require('../../../../../lib/http_code');
 
-const response = require('./response');
+const Query = require('./query');
 
 class Document {
+  constructor(db) {
+    this.qProcess = new Query(db);
+  }
+
   async getDocument() {
     const ctx = 'Document-getDocument';
-    const document = await response.findMany();
+    const document = await this.qProcess.findMany();
     if (document.err) {
       logger.error(ctx, 'Application error.', document.err);
       return wrapper.error('error', 'Application error', CODE.INTERNAL_ERROR);
@@ -18,7 +22,7 @@ class Document {
 
   async getDocumentById(payload) {
     const ctx = 'Document-getDocumentById';
-    const document = await response.findOne({ documentId: payload.documentId });
+    const document = await this.qProcess.findOne({ documentId: payload.documentId });
     if (document.err) {
       logger.error(ctx, 'Document not found.', document.err);
       return wrapper.error('error', 'Document not found!', CODE.NOT_FOUND);
