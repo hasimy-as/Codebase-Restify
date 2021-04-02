@@ -15,6 +15,10 @@
     "type": "git",
     "url": "git+https://github.com/hasimy-as/Codebase-Restify.git"
   },
+  "engines": {
+    "node": "14.5.0",
+    "npm": "7.6.1"
+  },
   "author": "Hasimy",
   "license": "MIT",
   "bugs": {
@@ -27,13 +31,17 @@
     "confidence": "^5.0.0",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
+    "dotenv": "^8.2.0",
     "eslint": "^7.17.0",
     "generic-pool": "^3.7.2",
     "hippie": "^0.6.1",
+    "istanbul": "^0.4.5",
     "joi": "^17.3.0",
     "jsonwebtoken": "^8.5.1",
     "mocha": "^8.2.1",
     "mongodb": "^3.6.3",
+    "nodemon": "^2.0.6",
+    "nyc": "^15.1.0",
     "passport": "^0.4.1",
     "passport-http": "^0.3.0",
     "redis": "^3.0.2",
@@ -42,12 +50,6 @@
     "uuid": "^3.4.0",
     "validate.js": "^0.13.1",
     "winston": "^2.4.5"
-  },
-  "devDependencies": {
-    "dotenv": "^8.2.0",
-    "istanbul": "^0.4.5",
-    "nodemon": "^2.0.6",
-    "nyc": "^15.1.0"
   },
   "nyc": {
     "lines": 80,
