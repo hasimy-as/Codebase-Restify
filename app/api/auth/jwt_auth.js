@@ -1,20 +1,23 @@
-const jwt = require('jsonwebtoken');
 const fs = require('fs');
+const jwt = require('jsonwebtoken');
+const validate = require('validate.js');
 
-const env = require('../../config/config');
-const wrapper = require('../../lib/wrapper');
+const config = require('../../config/config');
+const wrapper = require('../../helpers/wrapper');
+const Redis = require('../../database/redis/commands');
 const { CODE } = require('../../lib/http_code');
 
+const client = new Redis();
+
 const getKey = (keyPath) => fs.readFileSync(keyPath, 'utf8');
-const verifyOptions = {
-  algorithm: 'RS256',
-  issuer: 'hasimy-as',
-  expiresIn: '24h',
-};
 
 const generateToken = async (payload) => {
-  const privateKey = getKey(env.get('/privateKey'));
-  const token = jwt.sign(payload, privateKey, verifyOptions);
+  const privateKey = getKey(config.get('/privateKey'));
+  const token = jwt.sign(payload, privateKey, {
+    algorithm: 'RS256',
+    issuer: 'hasimy-as',
+    expiresIn: '24h',
+  });
   return token;
 };
 
@@ -32,8 +35,7 @@ const verifyToken = async (req, res, next) => {
   const result = {
     data: null,
   };
-  const publicKey = fs.readFileSync(env.get('/publicKey'), 'utf8');
-  delete verifyOptions.expiresIn;
+  const publicKey = fs.readFileSync(config.get('/publicKey'), 'utf8');
 
   const token = getToken(req.headers);
   if (!token) {
@@ -41,7 +43,12 @@ const verifyToken = async (req, res, next) => {
   }
   let decodedToken;
   try {
-    decodedToken = jwt.verify(token, publicKey, verifyOptions);
+    decodedToken = await jwt.verify(token, publicKey, { algorithm: 'RS256' });
+    const { data: redis, err: redisErr } = await client.get(`${decodedToken.key}${decodedToken._id}`);
+    if (redisErr || validate.isEmpty(redis)) {
+      return wrapper.response(res, 'fail', result, 'Access token expired!', CODE.UNAUTHORIZED);
+    }
+    decodedToken = JSON.parse(redis);
   } catch (error) {
     if (error instanceof jwt.TokenExpiredError) {
       return wrapper.response(res, 'fail', result, 'Access token expired!', CODE.UNAUTHORIZED);
