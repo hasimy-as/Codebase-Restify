@@ -26,11 +26,11 @@ To run this project locally, you will need to do a few things:
 
 # Getting started
 - Clone the repository
-```zsh
+```
 git clone --depth=1 https://github.com/hasimy-as/Codebase-Restify.git <project_name>
 ```
 - Install dependencies
-```zsh
+```
 cd <project_name>
 npm install
 ```
@@ -50,11 +50,11 @@ sudo chmod 777 /data/db
 ./redis-server
 ```
 - Run the project in production mode
-```zsh
+```
 npm start
 ```
 - Run the project in development mode
-```zsh
+```
 npm run dev
 ```
 - ESLint
@@ -75,7 +75,7 @@ npm run cover
 > **Note:** You may change the configuration as you like, and put it in a .env file.
 ```
 # PORT
-PORT = YOUR_PORT
+PORT = mongodb://<username>:<password>@<host>:<port>/<database_name>
 
 # MONGODB
 MONGO_URI = YOUR_MONGO_URI
@@ -160,11 +160,76 @@ A quick peek at some of the top-level files and directories found in this projec
 | package.json             | A manifest file for Node.js projects. Includes things such as metadata (the project's name, author, et cetera).|
 | package-lock.json        | An automatically generated file based on the exact versions of your npm dependencies that were installed for your project. (You won't change this file directly).|
 
-# Todos
+# Schema
 
-- [x] Refactor API format.
-- [x] Restructure project folders.
-- [ ] Unit test excluded components (check package.json).
+The schema or models that this project is using is with the help of [Joi](https://joi.dev).
+
+```js
+// Admin schema
+// GET BY ID
+adminId: Joi.string().guid().required()
+
+// CREATE
+roles: Joi.string().default(ROLES.SUPER_ADMIN).optional(),
+name: Joi.string().required(),
+address: Joi.string().required(),
+email: Joi.string().email().max(50).required(),
+password: Joi.string().min(6).required()
+
+// LOGIN
+email: Joi.string().email().max(50).required(),
+password: Joi.string().min(6).required()
+
+// UPDATE
+adminId: Joi.string().guid().required(),
+name: Joi.string().required(),
+address: Joi.string().required(),
+email: Joi.string().email().max(50).required(),
+password: Joi.string().min(6).required()
+
+// DELETE
+adminId: Joi.string().guid().required()
+
+// User schema
+// GET BY ID
+userId: Joi.string().guid().required()
+
+// CREATE
+roles: Joi.string().default(ROLES.USER).optional(),
+name: Joi.string().required(),
+address: Joi.string().required(),
+email: Joi.string().email().max(50).required(),
+password: Joi.string().min(6).required()
+
+// LOGIN
+email: Joi.string().email().max(50).required(),
+password: Joi.string().min(6).required()
+
+// UPDATE
+userId: Joi.string().guid().required(),
+name: Joi.string().required(),
+address: Joi.string().required(),
+email: Joi.string().email().max(50).required(),
+password: Joi.string().min(6).required()
+
+// DELETE
+userId: Joi.string().guid().required()
+
+// Document schema
+// CREATE
+title: Joi.string().max(60).required(),
+about: Joi.string().max(250).required(),
+document: Joi.string().required()
+
+// UPDATE
+documentId: Joi.string().guid().required(),
+title: Joi.string().max(60).required(),
+about: Joi.string().max(250).required(),
+document: Joi.string().required()
+
+// DELETE
+documentId: Joi.string().guid().required()
+```
 
 # Dependencies
 
