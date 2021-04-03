@@ -271,7 +271,7 @@ In that file you'll find two sections:
 
 # Version
 
-Current app version is on v2.0.0 **non-production-ready**.
+Current app version is on v2.0.0.
 
 # License and Conduct
 
