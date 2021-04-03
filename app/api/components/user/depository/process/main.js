@@ -51,7 +51,7 @@ class User {
 
   async loginUser(payload) {
     const ctx = 'User-loginUser';
-    const { data: user, err: userErr } = await this.qProcess.findOne({ username: payload.username });
+    const { data: user, err: userErr } = await this.qProcess.findOne({ email: payload.email });
     if (userErr) {
       logger.error(ctx, 'User not found.', userErr);
       return wrapper.error('error', 'User not found!', CODE.NOT_FOUND);
