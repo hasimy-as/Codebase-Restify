@@ -1,16 +1,11 @@
 const redis = require('redis');
 const genericPool = require('generic-pool');
 const config = require('../../config/config');
-const redisUrl = config.get('/');
 
 const myPool = () =>
   genericPool.createPool({
     create: function () {
-      return redis.createClient({
-        port: redisUrl.redis.port,
-        host: redisUrl.redis.host,
-        password: redisUrl.redis.password
-      });
+      return redis.createClient(config.get('/redis'));
     },
     destroy: function (client) {
       client.quit();
