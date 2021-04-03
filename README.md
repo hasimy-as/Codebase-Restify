@@ -72,7 +72,7 @@ npm run test
 npm run cover
 ```
 - Environment configuration (.env.example)
-> **Note:** You may change the configuration as you like, and put it in a .env file. You may also comment the Redis password if there's no password setup.
+> **Note:** You may change the configuration as you like, and put it in a .env file.
 ```
 # PORT
 PORT = YOUR_PORT
@@ -90,9 +90,7 @@ PRIVATE_KEY = private.pem
 SECRET_KEY = shussshhhh
 
 # REDIS
-REDIS_HOST = YOUR_REDIS_HOST
-REDIS_PORT = 6379
-REDIS_PASSWORD = YOUR_REDIS_PASSWORD 
+REDIS_URL = redis://<username>:<password>@<host>:<port>
 ```
 - Endpoints
 ```
